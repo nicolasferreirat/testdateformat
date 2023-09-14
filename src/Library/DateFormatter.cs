@@ -1,20 +1,29 @@
 ﻿namespace Ucu.Poo.TestDateFormat;
 
-/// <summary>
-/// Esta clase implementa la funcionalidad de cambiar el formato de una fecha.
-/// </summary>
 public class DateFormatter
 {
-
-    /// <summary>
-    /// Cambia el formato de la fecha que se recibe como argumento. La fecha que se recibe como argumento se asume en
-    /// formato "dd/mm/yyyy" y se retorna en formato "yyyy-mm-dd". No se controla que la fecha recibida tenga el formato
-    /// asumido.
-    /// </summary>
-    /// <param name="date">Una fecha en formato "dd/mm/yyyy".</param>
-    /// <returns>La fecha convertida al formato "yyyy-mm-dd".</returns>
     public static string ChangeFormat(string date)
     {
-        return date.Substring(6) + "-" + date.Substring(3, 2) + "-" + date.Substring(0, 2);
+        //chequeo que el año no esté escrito entre guiones y si con barras.
+        if (date.Length == 10 && date[2]=='/' && date[5]== '/')  
+        {
+            //Le pongo nombre a cada variable de acuerdo al índice que está escrito.
+            string year = date.Substring(6);              
+            string month = date.Substring(3,2);
+            string day = date.Substring(0,2);
+
+            //convierto las variables que están en string a int para poder comparar su tamaño.
+            int numYear = int.Parse(year);               
+            int numMonth = int.Parse(month);
+            int numDay = int.Parse(day);
+
+            //Chequeo que el año, el mes y el día sean válidos
+            if (numYear > 0 && numYear < 10000 && numMonth > 0 && numMonth < 13 && numDay > 0 && numDay < 32)
+            {
+                return date.Substring(6) + "-" + date.Substring(3, 2) + "-" + date.Substring(0, 2);
+            }
+            else {throw new Exception("Fecha inválida");}
+        }
+        else {throw new Exception("Fecha inválida");}
     }
 }
